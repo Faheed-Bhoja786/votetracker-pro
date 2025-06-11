@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vote</title>
+</head>
+<body>
+    <h1>Cast Your Vote</h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post">
+        <label>Select Party:</label><br><br>
+        {% for party in parties %}
+            <input type="radio" name="party_id" value="{{ party.id }}" required> {{ party.name }}<br>
+        {% endfor %}
+        <br><br>
+        <input type="submit" value="Submit Vote">
+    </form>
+
+    <p><a href="{{ url_for('home') }}">Back to Home</a></p>
+</body>
+</html>
