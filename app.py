@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# Models directly inside app for now
+# Models
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
@@ -32,9 +32,33 @@ class Vote(db.Model):
     voter_id = db.Column(db.Integer)
     party_id = db.Column(db.Integer)
 
+# Routes
+
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        admin = Admin.query.filter_by(username=username, password=password).first()
+
+        if admin:
+            session['admin_id'] = admin.id
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Invalid credentials')
+
+    return render_template('login.html')
+
+@app.route('/dashboard')
+def dashboard():
+    if 'admin_id' not in session:
+        return redirect(url_for('login'))
+    return "<h1>Welcome Admin! (Dashboard under construction)</h1>"
 
 if __name__ == '__main__':
     with app.app_context():
