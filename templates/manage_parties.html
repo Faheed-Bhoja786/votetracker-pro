@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Parties</title>
+</head>
+<body>
+    <h1>Manage Parties</h1>
+
+    <form method="post">
+        Party Name: <input type="text" name="name" required><br><br>
+        <input type="submit" value="Add Party">
+    </form>
+
+    <h2>Party List</h2>
+    <ul>
+        {% for party in parties %}
+            <li>{{ party.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></p>
+</body>
+</html>
