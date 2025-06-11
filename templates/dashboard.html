@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <ul>
+        <li><a href="{{ url_for('manage_voters') }}">Manage Voters</a></li>
+        <li><a href="{{ url_for('manage_parties') }}">Manage Parties</a></li>
+        <li><a href="{{ url_for('settings') }}">Site Settings</a></li>
+        <li><a href="{{ url_for('results') }}">View Results</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+
+    <p><a href="{{ url_for('home') }}">Back to Home</a></p>
+</body>
+</html>
