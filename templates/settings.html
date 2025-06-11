@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Site Settings</title>
+</head>
+<body>
+    <h1>Site Settings</h1>
+
+    <form method="post">
+        Site Title: <input type="text" name="site_title" value="{{ settings.site_title }}"><br><br>
+
+        Music On: <input type="checkbox" name="music_on" {% if settings.music_on %}checked{% endif %}><br><br>
+
+        Election Status: 
+        <select name="election_status">
+            <option value="Upcoming" {% if settings.election_status == "Upcoming" %}selected{% endif %}>Upcoming</option>
+            <option value="Ongoing" {% if settings.election_status == "Ongoing" %}selected{% endif %}>Ongoing</option>
+            <option value="Closed" {% if settings.election_status == "Closed" %}selected{% endif %}>Closed</option>
+        </select><br><br>
+
+        <input type="submit" value="Save Settings">
+    </form>
+
+    <p><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></p>
+</body>
+</html>
