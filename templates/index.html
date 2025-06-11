@@ -2,10 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>VoteTrackerPro</title>
+    <title>{{ settings.site_title if settings else "Vote Tracker" }}</title>
 </head>
 <body>
-    <h1>Welcome to VoteTrackerPro!</h1>
-    <p>Voting system coming soon...</p>
+    <h1>Welcome to {{ settings.site_title if settings else "Vote Tracker" }}</h1>
+
+    {% if settings and settings.election_status == 'Ongoing' %}
+        <h2>Cast Your Vote</h2>
+        <ul>
+            {% for party in parties %}
+                <li>
+                    {{ party.name }} 
+                    <a href="{{ url_for('vote', party_id=party.id) }}">Vote</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>Voting is {{ settings.election_status if settings else "not available" }}</h2>
+    {% endif %}
+
+    <p><a href="{{ url_for('voter_login') }}">Voter Login</a></p>
+    <p><a href="{{ url_for('results') }}">View Results</a></p>
+    <p><a href="{{ url_for('login') }}">Admin Login</a></p>
 </body>
 </html>
